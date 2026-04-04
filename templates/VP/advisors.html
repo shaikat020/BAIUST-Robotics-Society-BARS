@@ -43,46 +43,49 @@
     </div>
 
     <!-- Advisors Grid -->
-    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+    <div class="row g-4 justify-content-center">
         {% for advisor in advisors %}
-        <div class="col">
-            <div class="cyber-card h-100">
-                <div class="card-body text-center">
-                    <!-- Advisor Photo -->
-                    <div class="mb-4">
-                        {% if advisor.photo %}
-                        <img src="{{ advisor.photo.url }}" 
-                             alt="{{ advisor.name }}"
-                             class="advisor-photo rounded-circle border-cyan">
-                        {% else %}
-                        <div class="advisor-photo placeholder rounded-circle border-cyan d-flex align-items-center justify-content-center mx-auto">
-                            <i class="bi bi-person-fill fs-1 text-cyan"></i>
-                        </div>
-                        {% endif %}
+        <div class="col-md-6 col-lg-4">
+            <div class="cyber-card p-4 h-100 text-center border-cyan shadow-glow d-flex flex-column">
+                <!-- Advisor Photo -->
+                <div class="mb-3">
+                    {% if advisor.photo %}
+                    <img src="{{ advisor.photo.url }}" 
+                         alt="{{ advisor.name }}"
+                         class="rounded-circle border-cyan" 
+                         style="width: 120px; height: 120px; object-fit: cover;">
+                    {% else %}
+                    <div class="rounded-circle border-cyan d-flex align-items-center justify-content-center mx-auto"
+                         style="width: 120px; height: 120px; background: rgba(0, 243, 255, 0.1);">
+                        <i class="bi bi-person-fill fs-1 text-cyan"></i>
                     </div>
-                    
-                    <!-- Advisor Info -->
-                    <h4 class="card-title mb-2">{{ advisor.name }}</h4>
-                    <p class="text-orange mb-2">{{ advisor.designation }}</p>
-                    <p class="text-cyan mb-3">
-                        <i class="bi bi-building me-1"></i>
-                        {{ advisor.department }}
-                    </p>
-                    
-                    <!-- Bio Preview -->
-                    <p class="card-text small mb-4">{{ advisor.bio|truncatewords:20 }}</p>
-                    
-                    <!-- Action Buttons -->
-                    <div class="d-flex justify-content-center gap-2">
-                        <button class="btn btn-sm btn-outline-cyber" 
-                                data-bs-toggle="modal" 
-                                data-bs-target="#advisorModal{{ advisor.id }}">
-                            <i class="bi bi-eye me-1"></i>View Profile
-                        </button>
-                        <a href="mailto:{{ advisor.email }}" class="btn btn-sm btn-outline-cyber">
-                            <i class="bi bi-envelope me-1"></i>Contact
-                        </a>
-                    </div>
+                    {% endif %}
+                </div>
+                
+                <!-- Advisor Name -->
+                <h3 class="text-white mb-2">{{ advisor.name|upper }}</h3>
+                
+                <!-- Designation -->
+                <p class="text-orange small mb-2 fw-bold">{{ advisor.designation }}</p>
+                
+                <!-- Department -->
+                <p class="text-cyan small mb-3">
+                    <i class="bi bi-building me-1"></i>{{ advisor.department }}
+                </p>
+                
+                <!-- Bio -->
+                <p class="text-muted small help-text flex-grow-1 mb-3">{{ advisor.bio|truncatewords:20 }}</p>
+                
+                <!-- Buttons -->
+                <div class="mt-auto d-flex gap-2 justify-content-center">
+                    <button class="btn btn-sm btn-outline-cyber flex-fill" 
+                            data-bs-toggle="modal" 
+                            data-bs-target="#advisorModal{{ advisor.id }}">
+                        <i class="bi bi-eye me-1"></i>View Profile
+                    </button>
+                    <a href="mailto:{{ advisor.email }}" class="btn btn-sm btn-outline-cyber flex-fill">
+                        <i class="bi bi-envelope me-1"></i>Contact
+                    </a>
                 </div>
             </div>
         </div>

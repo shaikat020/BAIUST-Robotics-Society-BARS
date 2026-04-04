@@ -1,14 +1,15 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container py-5">
+<div class="event-print-wrapper">
+<div class="container py-5 event-detail-page">
     <div class="mb-4">
-        <a href="{% url 'events' %}" class="btn btn-outline-cyber">
+        <a href="{% url 'events' %}" class="btn btn-outline-cyber no-print">
             <i class="bi bi-arrow-left me-2"></i>Back to Events
         </a>
     </div>
 
-    <div class="row mb-5">
+    <div class="row mb-5 event-print-surface">
         <div class="col-lg-8">
             <div class="d-flex align-items-center mb-3">
                 <span class="status-badge status-{{ event.status|lower }} me-3">
@@ -24,7 +25,7 @@
             </div>
         </div>
         
-        <div class="col-lg-4">
+        <div class="col-lg-4 no-print">
             <div class="d-flex gap-2 mb-4">
                 <button class="btn btn-outline-cyber flex-fill" onclick="copyEventLink()"><i class="bi bi-share me-2"></i>Share</button>
                 <a href="https://www.google.com/calendar/render?action=TEMPLATE&text={{ event.title }}&dates={{ event.date|date:'Ymd\THis' }}&location={{ event.location }}" 
@@ -36,8 +37,20 @@
 
     <div class="row">
         <div class="col-lg-8">
+            {% if event.status != 'Completed' %}
+            <div class="timer-section mb-4 no-print">
+                <h4 class="text-center mb-3">
+                    <i class="bi bi-hourglass-split text-cyan me-2"></i>
+                    TIME TO OPERATION
+                </h4>
+                <div class="timer-display countdown" data-end="{{ event.date|date:'Y-m-d H:i:s' }}">
+                    Loading...
+                </div>
+            </div>
+            {% endif %}
+
             {% if event.image %}
-            <div class="cyber-card mb-4 p-2">
+            <div class="cyber-card mb-4 p-2 print-page-section">
                 <img src="{{ event.image.url }}" 
                      class="img-fluid rounded w-100 shadow-glow" 
                      alt="{{ event.title }}"
@@ -45,7 +58,7 @@
             </div>
             {% endif %}
 
-            <div class="cyber-card p-4 mb-4">
+            <div class="cyber-card p-4 mb-4 event-print-surface print-page-section">
                 <h4 class="text-cyan mb-3"><i class="bi bi-info-circle me-2"></i>Event Description</h4>
                 <div class="text-light fs-5" style="line-height: 1.8;">
                     {{ event.description|linebreaks }}
@@ -53,7 +66,7 @@
             </div>
 
             {% if event.status == 'Completed' %}
-            <div class="cyber-card-orange p-4 mb-4" style="border: 2px solid var(--primary-orange); background: rgba(255, 107, 0, 0.05);">
+            <div class="cyber-card-orange p-4 mb-4 event-print-surface print-page-section" style="border: 2px solid var(--primary-orange); background: rgba(255, 107, 0, 0.05);">
                 <div class="row align-items-center">
                     <div class="col-md-7">
                         <h4 class="text-orange mb-2"><i class="bi bi-trophy me-2"></i>Event Conclusion</h4>
@@ -77,7 +90,7 @@
         </div>
 
         <div class="col-lg-4">
-    <div class="cyber-card p-4 mb-4 border-cyan">
+    <div class="cyber-card p-4 mb-4 border-cyan event-print-surface quick-details-print print-page-section">
         <h5 class="text-cyan mb-3"><i class="bi bi-info-square me-2"></i>Quick Details</h5>
         <ul class="list-unstyled mb-0">
             <li class="mb-3">
@@ -105,7 +118,7 @@
     </div>
 
     {% if similar_events %}
-    <div class="cyber-card p-4 border-orange">
+    <div class="cyber-card p-4 border-orange event-print-surface no-print">
         <h5 class="text-orange mb-3">
             <i class="bi bi-intersect me-2"></i>Similar Operations
         </h5>
@@ -129,6 +142,7 @@
     {% endif %}
 </div>
     </div>
+</div>
 </div>
 
 <script>

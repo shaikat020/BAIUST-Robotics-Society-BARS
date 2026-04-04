@@ -1,4 +1,5 @@
 from django import forms
+import re
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from .models import UserProfile, Panel, Member, Event, Advisor
@@ -109,9 +110,40 @@ class RegistrationForm(UserCreationForm):
             "Enter the same password as before, for verification."
         )
 
+    def clean_email(self):
+        email = self.cleaned_data["email"].strip()
+
+        if User.objects.filter(email__iexact=email).exists():
+            raise forms.ValidationError(
+                "This email is already registered. Please use a different email."
+            )
+
+        return email
+
+    def clean_student_id(self):
+        student_id = self.cleaned_data.get("student_id", "").strip()
+
+        if student_id and UserProfile.objects.filter(student_id__iexact=student_id).exists():
+            raise forms.ValidationError(
+                "This student ID is already registered. Please use a different ID."
+            )
+
+        return student_id
+
+    def clean_phone(self):
+        phone = self.cleaned_data.get("phone", "").strip()
+        normalized_phone = re.sub(r"[()\s-]", "", phone)
+
+        if normalized_phone and UserProfile.objects.filter(phone=normalized_phone).exists():
+            raise forms.ValidationError(
+                "This phone number is already registered. Please use a different number."
+            )
+
+        return normalized_phone
+
     def save(self, commit=True):
         user = super().save(commit=False)
-        user.email = self.cleaned_data["email"]
+        user.email = self.cleaned_data["email"].lower()
         if commit:
             user.save()
         return user
@@ -436,3 +468,38 @@ class UserProfileForm(forms.ModelForm):
                 }
             ),
         }
+
+    def clean_student_id(self):
+        student_id = self.cleaned_data.get("student_id", "").strip()
+
+        if not student_id:
+            return student_id
+
+        qs = UserProfile.objects.filter(student_id__iexact=student_id)
+        if self.instance and self.instance.pk:
+            qs = qs.exclude(pk=self.instance.pk)
+
+        if qs.exists():
+            raise forms.ValidationError(
+                "This student ID is already in use."
+            )
+
+        return student_id
+
+    def clean_phone(self):
+        phone = self.cleaned_data.get("phone", "").strip()
+        normalized_phone = re.sub(r"[()\s-]", "", phone)
+
+        if not normalized_phone:
+            return normalized_phone
+
+        qs = UserProfile.objects.filter(phone=normalized_phone)
+        if self.instance and self.instance.pk:
+            qs = qs.exclude(pk=self.instance.pk)
+
+        if qs.exists():
+            raise forms.ValidationError(
+                "This phone number is already in use."
+            )
+
+        return normalized_phone

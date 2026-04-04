@@ -118,6 +118,193 @@ main.container-fluid {
 
 .cyber-card-orange:hover, .event-card:hover { box-shadow: var(--orange-glow); }
 
+.quick-details-print .help-text {
+    margin-bottom: 0.15rem !important;
+    min-height: 0 !important;
+}
+
+.quick-details-print li {
+    margin-bottom: 0.75rem !important;
+}
+
+.quick-details-print li:last-child {
+    margin-bottom: 0 !important;
+}
+
+/* --- Print Mode --- */
+@media print {
+    @page {
+        margin: 8mm 0 8mm 0;
+        size: auto;
+        background: var(--dark-card);
+    }
+
+    *,
+    *::before,
+    *::after {
+        box-sizing: border-box !important;
+    }
+
+    html,
+    body {
+        background: var(--dark-card) !important;
+        color: #fff !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        width: auto !important;
+        max-width: 100% !important;
+        overflow-x: hidden !important;
+        position: relative !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    /* Replace page white with app background without removing margin area */
+    body::before {
+        display: none !important;
+    }
+
+    body::after {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background: var(--dark-card) !important;
+        z-index: 0;
+        pointer-events: none;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    body > * {
+        position: relative;
+        z-index: 1;
+    }
+
+    .event-print-wrapper {
+        margin: 20mm !important;
+        padding: 0 !important;
+        width: auto !important;
+        max-width: none !important;
+        overflow: visible !important;
+        background: var(--dark-card) !important;
+    }
+
+    nav,
+    footer,
+    .no-print,
+    .btn,
+    .navbar-toggler,
+    .alert,
+    script {
+        display: none !important;
+    }
+
+    main.container-fluid,
+    .container,
+    .container-fluid {
+        max-width: none !important;
+        width: auto !important;
+        margin: 0 !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        overflow: visible !important;
+        background: var(--dark-card) !important;
+    }
+
+    .event-detail-page {
+        background: var(--dark-card) !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+    .event-detail-page .row {
+        --bs-gutter-x: 0 !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+
+    .event-detail-page [class*="col-"] {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+
+    .event-print-surface {
+        -webkit-box-decoration-break: clone;
+        box-decoration-break: clone;
+        margin-bottom: 1rem !important;
+    }
+
+    .print-page-section {
+        display: block !important;
+        width: auto !important;
+        max-width: 100% !important;
+        margin: 4mm 0 10mm 0 !important;
+        padding: 1.25rem !important;
+        border: 2px solid var(--primary-cyan) !important;
+        border-radius: 10px !important;
+        break-inside: avoid !important;
+        page-break-inside: avoid !important;
+        break-after: auto !important;
+        page-break-after: auto !important;
+    }
+
+    .print-page-section:last-child {
+        break-after: auto !important;
+        page-break-after: auto !important;
+    }
+
+    .print-page-section.cyber-card-orange {
+        border-color: var(--primary-orange) !important;
+    }
+
+    .cyber-card,
+    .cyber-card-orange,
+    .timer-section {
+        background: var(--dark-card) !important;
+        color: #fff !important;
+        box-shadow: none !important;
+        break-inside: avoid !important;
+        page-break-inside: avoid !important;
+        width: auto !important;
+        max-width: 100% !important;
+        margin: 0 0 1rem 0 !important;
+        padding: 1.25rem !important;
+    }
+
+    .cyber-card,
+    .cyber-card-orange {
+        border-color: var(--primary-cyan) !important;
+    }
+
+    .cyber-card-orange {
+        border-color: var(--primary-orange) !important;
+    }
+
+    .text-cyan,
+    .text-orange,
+    .help-text,
+    .status-badge,
+    .text-light,
+    .text-white {
+        color: #fff !important;
+        text-shadow: none !important;
+    }
+
+    .status-badge {
+        display: none !important;
+    }
+
+    a {
+        color: #fff !important;
+        text-decoration: none !important;
+    }
+
+    img {
+        max-width: 100% !important;
+        page-break-inside: avoid;
+    }
+}
+
 /* --- Member & Event Specifics --- */
 .member-photo {
     width: 150px;
@@ -387,6 +574,16 @@ a.text-decoration-none:hover h3 {
 /* CSS to match the image's specific card styling */
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Give hovered operation cards room so border/glow is not clipped */
+.operations-scroll {
+    padding-top: 12px;
+    padding-left: 12px;
+    padding-right: 12px;
+    margin-top: -12px;
+    margin-left: -12px;
+    margin-right: -12px;
+}
     
 .cyber-card {
     background: rgba(13, 13, 13, 0.8);

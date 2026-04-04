@@ -113,59 +113,57 @@
     </div>
 
     {% if events %}
-    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+    <div class="row g-4 justify-content-center">
         {% for event in events %}
-        <div class="col">
-            <div class="cyber-card h-100">
-                <div class="position-relative">
+        <div class="col-md-6 col-lg-4">
+            <div class="cyber-card p-4 h-100 text-center border-cyan shadow-glow d-flex flex-column">
+                <!-- Image or Icon -->
+                <div class="mb-3">
                     {% if event.image %}
                     <img src="{{ event.image.url }}" 
-                         class="card-img-top event-image" 
                          alt="{{ event.title }}"
-                         style="height: 200px; object-fit: cover;">
+                         class="img-fluid rounded" 
+                         style="max-height: 200px; object-fit: cover;">
                     {% else %}
-                    <div class="event-placeholder bg-dark d-flex align-items-center justify-content-center"
-                         style="height: 200px;">
-                        <i class="bi bi-calendar-event fs-1 text-cyan"></i>
-                    </div>
+                    <i class="bi bi-calendar-event text-cyan display-4"></i>
                     {% endif %}
-                    
-                    <!-- Status Badge -->
-                    <span class="position-absolute top-0 end-0 m-3 status-badge status-{{ event.status|lower }}">
-                        {{ event.status }}
-                    </span>
                 </div>
                 
-                <div class="card-body">
-                    <h5 class="card-title">{{ event.title }}</h5>
-                    
-                    <div class="event-meta mb-3">
-                        <p class="mb-1">
-                            <i class="bi bi-calendar text-cyan me-2"></i>
-                            {{ event.date|date:"M d, Y" }}
-                        </p>
-                        <p class="mb-1">
-                            <i class="bi bi-clock text-cyan me-2"></i>
-                            {{ event.date|date:"h:i A" }}
-                        </p>
-                        <p class="mb-0">
-                            <i class="bi bi-geo-alt text-cyan me-2"></i>
-                            {{ event.location }}
-                        </p>
+                <!-- Title -->
+                <h3 class="text-white mb-2">{{ event.title|upper }}</h3>
+                
+                <!-- Date and Location -->
+                <p class="text-cyan small mb-2 fw-bold">
+                    <i class="bi bi-calendar me-1"></i>{{ event.date|date:"M d, Y" }} • 
+                    <i class="bi bi-clock me-1"></i>{{ event.date|date:"h:i A" }}
+                </p>
+                
+                <!-- Location -->
+                <p class="text-white small mb-3">
+                    <i class="bi bi-geo-alt me-1 text-cyan"></i>{{ event.location }}
+                </p>
+                
+                <!-- Description -->
+                <p class="text-muted small help-text flex-grow-1 mb-3">{{ event.description|truncatewords:25 }}</p>
+                
+                <!-- Badges and Action -->
+                <div class="mt-auto">
+                    <div class="d-flex flex-wrap justify-content-center gap-2 mb-3">
+                        <span class="badge bg-dark border border-cyan text-cyan px-3 py-2">
+                            {{ event.status }}
+                        </span>
                     </div>
                     
-                    <p class="card-text">{{ event.description|truncatewords:30 }}</p>
-                    
-                    <div class="d-flex justify-content-between align-items-center mt-3">
-                        <a href="{% url 'event_detail' event.id %}" class="text-cyan text-decoration-none">
-                            View Details <i class="bi bi-arrow-right"></i>
+                    <div class="d-flex gap-2 justify-content-center">
+                        <a href="{% url 'event_detail' event.id %}" class="btn btn-sm btn-outline-cyber flex-fill">
+                            <i class="bi bi-info-circle me-1"></i>Details
                         </a>
                         
                         {% if event.registration_link and event.status == 'Upcoming' %}
                         <a href="{{ event.registration_link }}" 
                            target="_blank" 
-                           class="btn btn-sm btn-outline-cyber">
-                            Register
+                           class="btn btn-sm btn-cyber flex-fill">
+                            <i class="bi bi-pencil-square me-1"></i>Register
                         </a>
                         {% endif %}
                     </div>

@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // --- 4. Enhanced Card Hover & Glow Effects ---
-    const interactiveElements = document.querySelectorAll('.cyber-card, .cyber-card-orange, .member-card, .event-card, .role-btn');
+    const interactiveElements = document.querySelectorAll('.cyber-card, .cyber-card-orange, .member-card, .event-card, .role-btn, .timer-section');
     interactiveElements.forEach(card => {
         card.addEventListener('mouseenter', () => {
             if (!card.classList.contains('selected')) {
