@@ -159,7 +159,7 @@
                 
                 <div class="text-center mt-5">
                     <a href="{% url 'panel_detail' panel.id %}" class="btn btn-outline-cyber">
-                        <i class="bi bi-people-fill me-2"></i>Full Panel ({{ panel.members.count }})
+                        <i class="bi bi-people-fill me-2"></i>Full Panel ({{ panel.total_member_count }})
                     </a>
                 </div>
             </div>
@@ -224,14 +224,14 @@
             <div class="header-line mx-auto"></div>
         </div>
 
-        <div class="row g-4">
+        <div class="row g-4 justify-content-center">
             <div class="col-lg-4 col-md-6">
                 <div class="cyber-card p-0 h-100 border-cyan shadow-glow d-flex flex-column overflow-hidden">
                     <div class="project-header bg-dark p-3 text-center border-bottom border-cyan">
                         <i class="bi bi-heart-pulse text-cyan display-6"></i>
                     </div>
                     <div class="p-4 flex-grow-1">
-                        <h4 class="text-white">MONBONDHU</h4>
+                        <h4 class="text-white">BAIUST-Robotics-Society-BARS</h4>
                         <p class="small text-muted help-text">Community Health Navigator platform developed in November 2025 to streamline healthcare access.</p>
                         <div class="d-flex gap-2 mt-3 mb-4">
                             <span class="badge bg-dark border border-cyan text-cyan">Django</span>
@@ -239,14 +239,14 @@
                         </div>
                     </div>
                     <div class="p-4 pt-0">
-                        <a href="https://github.com/shaikat020/Mon_bondhu.git" target="_blank" class="btn btn-outline-cyan w-100 btn-sm">
+                        <a href="https://github.com/RR0327/BAIUST-Robotics-Society-BARS.git" target="_blank" class="btn btn-outline-cyan w-100 btn-sm">
                             <i class="bi bi-github me-2"></i>VIEW SOURCE CODE
                         </a>
                     </div>
                 </div>
             </div>
 
-            <div class="col-lg-4 col-md-6">
+            {% comment %} <div class="col-lg-4 col-md-6">
                 <div class="cyber-card p-0 h-100 border-orange shadow-glow d-flex flex-column overflow-hidden">
                     <div class="project-header bg-dark p-3 text-center border-bottom border-orange">
                         <i class="bi bi-qr-code-scan text-orange display-6"></i>
@@ -255,7 +255,7 @@
                         <h4 class="text-white">Campus Event Management System</h4>
                         <p class="small text-muted help-text">Full-stack system featuring QR-based ticketing for university campus operations, developed in 2025.</p>
                         <div class="d-flex gap-2 mt-3 mb-4">
-                            <span class="badge bg-dark border border-orange text-orange">Python</span>
+                            <span class="badge bg-dark border border-orange text-orange">Django</span>
                             <span class="badge bg-dark border border-orange text-orange">Automation</span>
                         </div>
                     </div>
@@ -267,7 +267,7 @@
                 </div>
             </div>
 
-            <div class="col-lg-4 col-md-12">
+            <div class="col-lg-4 col-md-6">
                 <div class="cyber-card p-0 h-100 border-cyan shadow-glow d-flex flex-column overflow-hidden">
                     <div class="project-header bg-dark p-3 text-center border-bottom border-cyan">
                         <i class="bi bi-trash3 text-cyan display-6"></i>
@@ -286,50 +286,17 @@
                         </a>
                     </div>
                 </div>
-            </div>
+            </div> {% endcomment %}
         </div>
     </div>
 </section>
 
-<section class="py-5" style="background: linear-gradient(180deg, #050505 0%, #0a0a0a 100%);">
-    <div class="container">
-        <div class="cyber-card p-5 border-cyan shadow-glow text-center mx-auto" style="max-width: 900px;">
-            <div class="mb-4">
-                <i class="bi bi-person-workspace text-orange display-3"></i>
-            </div>
-            <h2 class="glow-text mb-3">EXPAND THE NETWORK</h2>
-            <p class="lead text-light mb-4">
-                Are you a BAIUST student looking to master **Robotics**, **IoT**, or **Full-Stack Development**? 
-                Join our community to receive mentorship from our senior leads.
-            </p>
-            
-            <div class="row g-3 justify-content-center">
-                <div class="col-md-5">
-                    <a href="https://discord.gg/your-invite-link" target="_blank" class="btn btn-discord w-100 py-3">
-                        <i class="bi bi-discord me-2"></i>JOIN DISCORD SERVER
-                    </a>
-                </div>
-                <div class="col-md-5">
-                    <a href="https://chat.whatsapp.com/your-invite-link" target="_blank" class="btn btn-whatsapp w-100 py-3">
-                        <i class="bi bi-whatsapp me-2"></i>WHATSAPP COMMUNITY
-                    </a>
-                </div>
-            </div>
-            
-            <div class="mt-4">
-                <p class="text-cyan small uppercase tracking-widest">
-                    <i class="bi bi-info-circle me-1"></i> 50+ active members currently in mentorship
-                </p>
-            </div>
-        </div>
-    </div>
-</section>
 
 <section class="py-5 bg-dark">
     <div class="container">
         <div class="text-center mb-5">
-            <h2 class="glow-text">DEVELOPMENT ROADMAP</h2>
-            <p class="text-cyan uppercase tracking-widest small">From Undergraduate to Specialized Engineer</p>
+            <h2 class="glow-text">HARDWARE ENGINEERING ROADMAP</h2>
+            <p class="text-cyan uppercase tracking-widest small">From Electronics Fundamentals to Robotics Hardware Systems</p>
             <div class="header-line mx-auto"></div>
         </div>
 
@@ -337,11 +304,11 @@
             <div class="col-lg-3 col-md-6">
                 <div class="cyber-card p-4 h-100 border-secondary text-center">
                     <div class="text-orange mb-3 h2">01</div>
-                    <h5 class="text-white">CORE PROTOCOLS</h5>
-                    <p class="small help-text">Mastering C++, Python basics, and the Linux command line.</p>
+                    <h5 class="text-white">EMBEDDED FOUNDATION</h5>
+                    <p class="small help-text">Learning basic electronics, circuit safety, microcontroller fundamentals, and hands-on breadboard skills.</p>
                     <ul class="list-unstyled extra-small text-cyan opacity-75">
-                        <li><i class="bi bi-check2-all me-1"></i>Logic Building</li>
-                        <li><i class="bi bi-check2-all me-1"></i>Linux Internals</li>
+                        <li><i class="bi bi-check2-all me-1"></i>Electronics Basics</li>
+                        <li><i class="bi bi-check2-all me-1"></i>Microcontroller Hardware</li>
                     </ul>
                 </div>
             </div>
@@ -349,11 +316,11 @@
             <div class="col-lg-3 col-md-6">
                 <div class="cyber-card p-4 h-100 border-cyan text-center">
                     <div class="text-cyan mb-3 h2">02</div>
-                    <h5 class="text-white">HARDWARE UPLINK</h5>
-                    <p class="small help-text">Deep dive into Arduino, embedded systems, and IoT prototyping.</p>
+                    <h5 class="text-white">EMBEDDED SYSTEMS</h5>
+                    <p class="small help-text">Building sensor-based boards, power circuits, and reliable embedded prototypes with ESP/STM platforms.</p>
                     <ul class="list-unstyled extra-small text-cyan opacity-75">
                         <li><i class="bi bi-check2-all me-1"></i>Sensor Integration</li>
-                        <li><i class="bi bi-check2-all me-1"></i>Circuit Design</li>
+                        <li><i class="bi bi-check2-all me-1"></i>Power & PCB Basics</li>
                     </ul>
                 </div>
             </div>
@@ -361,11 +328,11 @@
             <div class="col-lg-3 col-md-6">
                 <div class="cyber-card p-4 h-100 border-orange text-center">
                     <div class="text-orange mb-3 h2">03</div>
-                    <h5 class="text-white">BACKEND ARCHITECTURE</h5>
-                    <p class="small help-text">Building robust systems using Django, FastAPI, and PostgreSQL.</p>
+                    <h5 class="text-white">CONTROL & AUTOMATION</h5>
+                    <p class="small help-text">Designing automation circuits and actuator control systems for lab and industrial robotics applications.</p>
                     <ul class="list-unstyled extra-small text-cyan opacity-75">
-                        <li><i class="bi bi-check2-all me-1"></i>RESTful APIs</li>
-                        <li><i class="bi bi-check2-all me-1"></i>System Security</li>
+                        <li><i class="bi bi-check2-all me-1"></i>Control Systems</li>
+                        <li><i class="bi bi-check2-all me-1"></i>Motors, Drivers & PLC</li>
                     </ul>
                 </div>
             </div>
@@ -373,11 +340,11 @@
             <div class="col-lg-3 col-md-6">
                 <div class="cyber-card p-4 h-100 border-cyan text-center">
                     <div class="text-cyan mb-3 h2">04</div>
-                    <h5 class="text-white">SOCIAL DEPLOYMENT</h5>
-                    <p class="small help-text">Deploying AI-driven and IoT solutions for real-world social impact.</p>
+                    <h5 class="text-white">ROBOTICS HARDWARE BUILD</h5>
+                    <p class="small help-text">Integrating electronics, mechanics, and control hardware into complete robotics systems.</p>
                     <ul class="list-unstyled extra-small text-cyan opacity-75">
-                        <li><i class="bi bi-check2-all me-1"></i>Ethical AI</li>
-                        <li><i class="bi bi-check2-all me-1"></i>Public Projects</li>
+                        <li><i class="bi bi-check2-all me-1"></i>Prototype Assembly</li>
+                        <li><i class="bi bi-check2-all me-1"></i>Testing & Calibration</li>
                     </ul>
                 </div>
             </div>

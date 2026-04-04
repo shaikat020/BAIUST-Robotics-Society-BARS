@@ -13,6 +13,23 @@ class Panel(models.Model):
     class Meta:
         ordering = ["-year"]
 
+    @property
+    def president_count(self):
+        # Prefer explicit Member records; fallback to a panel admin profile.
+        member_presidents = self.members.filter(role__iexact="President").count()
+        if member_presidents:
+            return member_presidents
+        return 1 if self.userprofile_set.filter(user_type="admin").exists() else 0
+
+    @property
+    def total_member_count(self):
+        total = self.members.count()
+        has_member_president = self.members.filter(role__iexact="President").exists()
+        has_admin_president = self.userprofile_set.filter(user_type="admin").exists()
+        if not has_member_president and has_admin_president:
+            total += 1
+        return total
+
     def __str__(self):
         return f"{self.name} ({self.year})"
 
@@ -53,6 +70,7 @@ class Member(models.Model):
     photo = models.ImageField(upload_to="members/", blank=True, null=True)
     bio = models.TextField(blank=True)
     email = models.EmailField(blank=True)
+    mobile_number = models.CharField(max_length=11, blank=True, null=True)
     linkedin = models.URLField(blank=True)
     github = models.URLField(blank=True)
     order = models.IntegerField(default=0)

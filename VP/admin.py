@@ -19,13 +19,13 @@ class PanelAdmin(admin.ModelAdmin):
 
 
 class MemberAdmin(admin.ModelAdmin):
-    list_display = ["name", "role", "department", "panel", "email", "order"]
+    list_display = ["name", "role", "department", "panel", "email", "mobile_number", "order"]
     list_filter = ["role", "department", "panel"]
-    search_fields = ["name", "email", "bio"]
+    search_fields = ["name", "email", "mobile_number", "bio"]
     ordering = ["order", "name"]
     fieldsets = (
         ("Personal Information", {
-            "fields": ("name", "fathers_name", "email", "photo", "bio")
+            "fields": ("name", "fathers_name", "email", "mobile_number", "photo", "bio")
         }),
         ("Role & Panel", {
             "fields": ("role", "panel", "department", "order")

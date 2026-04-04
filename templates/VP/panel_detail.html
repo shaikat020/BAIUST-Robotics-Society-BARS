@@ -15,22 +15,22 @@
             <div class="col-lg-8">
                 <h1 class="glow-text mb-2">{{ panel.name }}</h1>
                 <h3 class="text-cyan mb-3">{{ panel.year }}</h3>
+                {% if panel.mobile_number %}
+                <p class="mb-2">
+                    <i class="bi bi-telephone-fill text-cyan me-2"></i>
+                    <a href="tel:{{ panel.mobile_number }}" class="text-white text-decoration-none">{{ panel.mobile_number }}</a>
+                </p>
+                {% endif %}
                 <p class="lead">{{ panel.description }}</p>
             </div>
             <div class="col-lg-4 text-lg-end">
                 <div class="panel-stats">
                     <div class="d-inline-block text-center mx-2">
-                        <h2 class="text-cyan mb-0">{{ panel.members.count }}</h2>
+                        <h2 class="text-cyan mb-0">{{ panel.total_member_count }}</h2>
                         <small>Total Members</small>
                     </div>
                     <div class="d-inline-block text-center mx-2">
-                        <h2 class="text-orange mb-0">
-                            {% for member in members %}
-                                {% if member.role == 'President' %}
-                                    1
-                                {% endif %}
-                            {% endfor %}
-                        </h2>
+                        <h2 class="text-orange mb-0">{{ panel.president_count }}</h2>
                         <small>President</small>
                     </div>
                 </div>
@@ -79,11 +79,41 @@
                             <i class="bi bi-envelope"></i>
                         </a>
                         {% endif %}
+                        {% if member.mobile_number %}
+                        <a href="tel:{{ member.mobile_number }}" class="btn btn-sm btn-outline-cyber">
+                            <i class="bi bi-telephone-fill"></i>
+                        </a>
+                        {% endif %}
                     </div>
                 </div>
             </div>
             {% endif %}
         {% endfor %}
+
+        {% if fallback_president %}
+        <div class="col">
+            <div class="cyber-card h-100 p-3 text-center president-card">
+                <div class="mb-3">
+                    <div class="member-photo bg-secondary d-flex align-items-center justify-content-center mx-auto">
+                        <i class="bi bi-person-fill fs-1 text-light"></i>
+                    </div>
+                </div>
+
+                <h5 class="fw-bold">{{ fallback_president.user.get_full_name|default:fallback_president.user.username }}</h5>
+                <span class="badge bg-orange rounded-pill mb-2">President</span>
+
+                <p class="small text-white mb-3">Panel President profile linked from admin account.</p>
+
+                <div class="d-flex justify-content-center gap-2 mt-auto">
+                    {% if fallback_president.user.email %}
+                    <a href="mailto:{{ fallback_president.user.email }}" class="btn btn-sm btn-outline-cyber">
+                        <i class="bi bi-envelope"></i>
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endif %}
 
         <!-- Then show Vice President -->
         {% for member in members %}
@@ -116,6 +146,11 @@
                         {% if member.email %}
                         <a href="mailto:{{ member.email }}" class="btn btn-sm btn-outline-cyber">
                             <i class="bi bi-envelope"></i>
+                        </a>
+                        {% endif %}
+                        {% if member.mobile_number %}
+                        <a href="tel:{{ member.mobile_number }}" class="btn btn-sm btn-outline-cyber">
+                            <i class="bi bi-telephone-fill"></i>
                         </a>
                         {% endif %}
                     </div>
@@ -157,6 +192,11 @@
                             <i class="bi bi-envelope"></i>
                         </a>
                         {% endif %}
+                        {% if member.mobile_number %}
+                        <a href="tel:{{ member.mobile_number }}" class="btn btn-sm btn-outline-cyber">
+                            <i class="bi bi-telephone-fill"></i>
+                        </a>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -194,6 +234,11 @@
                         {% if member.email %}
                         <a href="mailto:{{ member.email }}" class="btn btn-sm btn-outline-cyber">
                             <i class="bi bi-envelope"></i>
+                        </a>
+                        {% endif %}
+                        {% if member.mobile_number %}
+                        <a href="tel:{{ member.mobile_number }}" class="btn btn-sm btn-outline-cyber">
+                            <i class="bi bi-telephone-fill"></i>
                         </a>
                         {% endif %}
                     </div>
@@ -235,6 +280,11 @@
                             <i class="bi bi-envelope"></i>
                         </a>
                         {% endif %}
+                        {% if member.mobile_number %}
+                        <a href="tel:{{ member.mobile_number }}" class="btn btn-sm btn-outline-cyber">
+                            <i class="bi bi-telephone-fill"></i>
+                        </a>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -272,6 +322,11 @@
                         {% if member.email %}
                         <a href="mailto:{{ member.email }}" class="btn btn-sm btn-outline-cyber">
                             <i class="bi bi-envelope"></i>
+                        </a>
+                        {% endif %}
+                        {% if member.mobile_number %}
+                        <a href="tel:{{ member.mobile_number }}" class="btn btn-sm btn-outline-cyber">
+                            <i class="bi bi-telephone-fill"></i>
                         </a>
                         {% endif %}
                         
@@ -339,6 +394,11 @@
                         {% if member.email %}
                         <p class="small text-white">{{ member.email }}</p>
                         {% endif %}
+                        {% if member.mobile_number %}
+                        <p class="small text-white">
+                            <i class="bi bi-telephone-fill text-cyan me-1"></i>{{ member.mobile_number }}
+                        </p>
+                        {% endif %}
                         <p class="small text-white">{{ member.panel.name }} ({{ member.panel.year }})</p>
                     </div>
                     
@@ -363,6 +423,11 @@
                             {% if member.email %}
                             <a href="mailto:{{ member.email }}" class="btn btn-sm btn-outline-cyber">
                                 <i class="bi bi-envelope me-1"></i>Email
+                            </a>
+                            {% endif %}
+                            {% if member.mobile_number %}
+                            <a href="tel:{{ member.mobile_number }}" class="btn btn-sm btn-outline-cyber">
+                                <i class="bi bi-telephone-fill me-1"></i>Phone
                             </a>
                             {% endif %}
                             {% if member.linkedin %}

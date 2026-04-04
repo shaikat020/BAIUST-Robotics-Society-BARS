@@ -19,9 +19,16 @@ from .forms import RegistrationForm, UserUpdateForm, UserProfileForm, LoginForm
 
 def is_admin(user):
     """Helper to check if the user is authorized as admin."""
+    if not user.is_authenticated:
+        return False
+
+    # Django superusers/staff should always pass admin checks
+    if user.is_superuser or user.is_staff:
+        return True
+
     try:
         return user.userprofile.user_type == "admin"
-    except:
+    except UserProfile.DoesNotExist:
         return False
 
 
@@ -201,6 +208,9 @@ def members_view(request):
 
 def register_view(request):
     """Handles new user registration and profile initialization."""
+    if request.user.is_authenticated:
+        return redirect("admin_dashboard" if is_admin(request.user) else "index")
+
     if request.method == "POST":
         form = RegistrationForm(request.POST)
         if form.is_valid():
@@ -221,6 +231,9 @@ def register_view(request):
 
 def login_view(request):
     """Handles terminal access for authorized users."""
+    if request.user.is_authenticated:
+        return redirect("admin_dashboard" if is_admin(request.user) else "index")
+
     if request.method == "POST":
         form = LoginForm(request, data=request.POST)
         if form.is_valid():
