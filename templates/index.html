@@ -26,15 +26,12 @@
 <section class="py-5">
     <div class="container">
         <h2 class="section-title">PANEL Information</h2>
-        
+
         <ul class="nav panel-tabs" id="panelTabs" role="tablist">
             {% for panel in panels %}
             <li class="nav-item" role="presentation">
-                <button class="btn btn-outline-cyber panel-tab {% if forloop.first %}active{% endif %}" 
-                        id="tab-{{ panel.id }}" 
-                        data-bs-toggle="tab" 
-                        data-bs-target="#panel-{{ panel.id }}" 
-                        type="button">
+                <button class="btn btn-outline-cyber panel-tab {% if forloop.first %}active{% endif %}"
+                    id="tab-{{ panel.id }}" data-bs-toggle="tab" data-bs-target="#panel-{{ panel.id }}" type="button">
                     {{ panel.name }}
                 </button>
             </li>
@@ -43,120 +40,123 @@
 
         <div class="tab-content mt-4" id="panelContent">
             {% for panel in panels %}
-            <div class="tab-pane fade {% if forloop.first %}show active{% endif %}" 
-                 id="panel-{{ panel.id }}" 
-                 role="tabpanel">
-                
+            <div class="tab-pane fade {% if forloop.first %}show active{% endif %}" id="panel-{{ panel.id }}"
+                role="tabpanel">
+
                 <div class="row align-items-center mb-4">
                     <div class="col-lg-8">
                         <h3 class="text-cyan mb-2">{{ panel.name }} ({{ panel.year }})</h3>
                         <p class="lead">{{ panel.description }}</p>
                     </div>
-                   
+
                 </div>
 
                 <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4 mt-1">
                     {% with members=panel.members.all %}
-                        
-                        {% for member in members %}
-                            {% if member.role == 'President' %}
-                            <div class="col">
-                                <div class="cyber-card h-100 p-3 text-center president-card">
-                                    {% if member.photo %}
-                                    <img src="{{ member.photo.url }}" alt="{{ member.name }}" class="member-photo">
-                                    {% else %}
-                                    <div class="member-photo bg-secondary d-flex align-items-center justify-content-center">
-                                        <i class="bi bi-person-fill fs-1"></i>
-                                    </div>
-                                    {% endif %}
-                                    <h5 class="mt-3">{{ member.name }}</h5>
-                                    <span class="badge bg-orange rounded-pill mb-2">{{ member.role }}</span>
-                                    <p class="small">{{ member.bio|linebreaks|truncatewords:10 }}</p>
-                                    <div class="mt-auto">
-                                        <button class="btn btn-sm btn-outline-cyber w-100" data-bs-toggle="modal" data-bs-target="#memberModal{{ member.id }}">
-                                            VIEW PROFILE
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            {% endif %}
-                        {% endfor %}
 
-                        {% for member in members %}
-                            {% if member.role == 'Vice President' %}
-                            <div class="col">
-                                <div class="cyber-card h-100 p-3 text-center">
-                                    {% if member.photo %}
-                                    <img src="{{ member.photo.url }}" alt="{{ member.name }}" class="member-photo">
-                                    {% else %}
-                                    <div class="member-photo bg-secondary d-flex align-items-center justify-content-center">
-                                        <i class="bi bi-person-fill fs-1"></i>
-                                    </div>
-                                    {% endif %}
-                                    <h5 class="mt-3">{{ member.name }}</h5>
-                                    <span class="badge bg-cyan rounded-pill mb-2">{{ member.role }}</span>
-                                    <p class="small">{{ member.bio|linebreaks|truncatewords:10 }}</p>
-                                    <div class="mt-auto">
-                                        <button class="btn btn-sm btn-outline-cyber w-100" data-bs-toggle="modal" data-bs-target="#memberModal{{ member.id }}">
-                                            VIEW PROFILE
-                                        </button>
-                                    </div>
-                                </div>
+                    {% for member in members %}
+                    {% if member.role == 'President' %}
+                    <div class="col">
+                        <div class="cyber-card h-100 p-3 text-center president-card">
+                            {% if member.photo %}
+                            <img src="{{ member.photo.url }}" alt="{{ member.name }}" class="member-photo">
+                            {% else %}
+                            <div class="member-photo bg-secondary d-flex align-items-center justify-content-center">
+                                <i class="bi bi-person-fill fs-1"></i>
                             </div>
                             {% endif %}
-                        {% endfor %}
+                            <h5 class="mt-3">{{ member.name }}</h5>
+                            <span class="badge bg-orange rounded-pill mb-2">{{ member.role }}</span>
+                            <p class="small">{{ member.bio|linebreaks|truncatewords:10 }}</p>
+                            <div class="mt-auto">
+                                <button class="btn btn-sm btn-outline-cyber w-100" data-bs-toggle="modal"
+                                    data-bs-target="#memberModal{{ member.id }}">
+                                    VIEW PROFILE
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% endfor %}
 
-                        {% for member in members %}
-                            {% if member.role == 'General Secretary' or member.role == 'Secretary' %}
-                            <div class="col">
-                                <div class="cyber-card h-100 p-3 text-center">
-                                    {% if member.photo %}
-                                    <img src="{{ member.photo.url }}" alt="{{ member.name }}" class="member-photo">
-                                    {% else %}
-                                    <div class="member-photo bg-secondary d-flex align-items-center justify-content-center">
-                                        <i class="bi bi-person-fill fs-1"></i>
-                                    </div>
-                                    {% endif %}
-                                    <h5 class="mt-3">{{ member.name }}</h5>
-                                    <span class="badge bg-cyan rounded-pill mb-2">{{ member.role }}</span>
-                                    <p class="small">{{ member.bio|linebreaks|truncatewords:10 }}</p>
-                                    <div class="mt-auto">
-                                        <button class="btn btn-sm btn-outline-cyber w-100" data-bs-toggle="modal" data-bs-target="#memberModal{{ member.id }}">
-                                            VIEW PROFILE
-                                        </button>
-                                    </div>
-                                </div>
+                    {% for member in members %}
+                    {% if member.role == 'Vice President' %}
+                    <div class="col">
+                        <div class="cyber-card h-100 p-3 text-center">
+                            {% if member.photo %}
+                            <img src="{{ member.photo.url }}" alt="{{ member.name }}" class="member-photo">
+                            {% else %}
+                            <div class="member-photo bg-secondary d-flex align-items-center justify-content-center">
+                                <i class="bi bi-person-fill fs-1"></i>
                             </div>
                             {% endif %}
-                        {% endfor %}
+                            <h5 class="mt-3">{{ member.name }}</h5>
+                            <span class="badge bg-cyan rounded-pill mb-2">{{ member.role }}</span>
+                            <p class="small">{{ member.bio|linebreaks|truncatewords:10 }}</p>
+                            <div class="mt-auto">
+                                <button class="btn btn-sm btn-outline-cyber w-100" data-bs-toggle="modal"
+                                    data-bs-target="#memberModal{{ member.id }}">
+                                    VIEW PROFILE
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% endfor %}
 
-                        {% for member in members %}
-                            {% if member.role == 'Joint Secretary' %}
-                            <div class="col">
-                                <div class="cyber-card h-100 p-3 text-center">
-                                    {% if member.photo %}
-                                    <img src="{{ member.photo.url }}" alt="{{ member.name }}" class="member-photo">
-                                    {% else %}
-                                    <div class="member-photo bg-secondary d-flex align-items-center justify-content-center">
-                                        <i class="bi bi-person-fill fs-1"></i>
-                                    </div>
-                                    {% endif %}
-                                    <h5 class="mt-3">{{ member.name }}</h5>
-                                    <span class="badge bg-cyan rounded-pill mb-2">{{ member.role }}</span>
-                                    <p class="small">{{ member.bio|linebreaks|truncatewords:10 }}</p>
-                                    <div class="mt-auto">
-                                        <button class="btn btn-sm btn-outline-cyber w-100" data-bs-toggle="modal" data-bs-target="#memberModal{{ member.id }}">
-                                            VIEW PROFILE
-                                        </button>
-                                    </div>
-                                </div>
+                    {% for member in members %}
+                    {% if member.role == 'General Secretary' or member.role == 'Secretary' %}
+                    <div class="col">
+                        <div class="cyber-card h-100 p-3 text-center">
+                            {% if member.photo %}
+                            <img src="{{ member.photo.url }}" alt="{{ member.name }}" class="member-photo">
+                            {% else %}
+                            <div class="member-photo bg-secondary d-flex align-items-center justify-content-center">
+                                <i class="bi bi-person-fill fs-1"></i>
                             </div>
                             {% endif %}
-                        {% endfor %}
+                            <h5 class="mt-3">{{ member.name }}</h5>
+                            <span class="badge bg-cyan rounded-pill mb-2">{{ member.role }}</span>
+                            <p class="small">{{ member.bio|linebreaks|truncatewords:10 }}</p>
+                            <div class="mt-auto">
+                                <button class="btn btn-sm btn-outline-cyber w-100" data-bs-toggle="modal"
+                                    data-bs-target="#memberModal{{ member.id }}">
+                                    VIEW PROFILE
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+
+                    {% for member in members %}
+                    {% if member.role == 'Joint Secretary' %}
+                    <div class="col">
+                        <div class="cyber-card h-100 p-3 text-center">
+                            {% if member.photo %}
+                            <img src="{{ member.photo.url }}" alt="{{ member.name }}" class="member-photo">
+                            {% else %}
+                            <div class="member-photo bg-secondary d-flex align-items-center justify-content-center">
+                                <i class="bi bi-person-fill fs-1"></i>
+                            </div>
+                            {% endif %}
+                            <h5 class="mt-3">{{ member.name }}</h5>
+                            <span class="badge bg-cyan rounded-pill mb-2">{{ member.role }}</span>
+                            <p class="small">{{ member.bio|linebreaks|truncatewords:10 }}</p>
+                            <div class="mt-auto">
+                                <button class="btn btn-sm btn-outline-cyber w-100" data-bs-toggle="modal"
+                                    data-bs-target="#memberModal{{ member.id }}">
+                                    VIEW PROFILE
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% endfor %}
 
                     {% endwith %}
                 </div>
-                
+
                 <div class="text-center mt-5">
                     <a href="{% url 'panel_detail' panel.id %}" class="btn btn-outline-cyber">
                         <i class="bi bi-people-fill me-2"></i>Full Panel ({{ panel.total_member_count }})
@@ -171,26 +171,30 @@
 <section id="operations" class="py-5" style="background-color: #0a0a0a;">
     <div class="container">
         <h2 class="hero-title mb-5 text-start">LIVE & UPCOMING OPERATIONS</h2>
-        
+
         <div class="d-flex justify-content-center overflow-auto pb-4 gap-4 no-scrollbar operations-scroll">
             {% for event in upcoming_events %}
             <div class="operation-card-wrapper flex-shrink-0" style="width: 350px;">
-                <div class="cyber-card h-100 p-4 d-flex flex-column align-items-center justify-content-between text-center" 
-                     style="border: 4px solid var(--primary-cyan); border-radius: 20px; min-height: 450px;">
-                    
+                <div class="cyber-card h-100 p-4 d-flex flex-column align-items-center justify-content-between text-center"
+                    style="border: 4px solid var(--primary-cyan); border-radius: 20px; min-height: 450px;">
+
                     <div class="position-relative w-100 mb-3">
                         {% if event.status == 'Ongoing' %}
-                            <span class="badge bg-orange text-dark position-absolute top-0 start-0 m-2 px-3 py-1 fw-bold" style="z-index: 2; border-radius: 5px;">ONGOING</span>
+                        <span class="badge bg-orange text-dark position-absolute top-0 start-0 m-2 px-3 py-1 fw-bold"
+                            style="z-index: 2; border-radius: 5px;">ONGOING</span>
                         {% else %}
-                            <span class="badge bg-cyan text-dark position-absolute top-0 start-0 m-2 px-3 py-1 fw-bold" style="z-index: 2; border-radius: 5px;">UPCOMING</span>
+                        <span class="badge bg-cyan text-dark position-absolute top-0 start-0 m-2 px-3 py-1 fw-bold"
+                            style="z-index: 2; border-radius: 5px;">UPCOMING</span>
                         {% endif %}
 
                         {% if event.image %}
-                            <img src="{{ event.image.url }}" class="img-fluid rounded-3 border-cyan" style="height: 180px; width: 100%; object-fit: cover; border-width: 2px;">
+                        <img src="{{ event.image.url }}" class="img-fluid rounded-3 border-cyan"
+                            style="height: 180px; width: 100%; object-fit: cover; border-width: 2px;">
                         {% else %}
-                            <div class="timer-display h3 text-cyan my-4 countdown-mini" data-end="{{ event.date|date:'Y-m-d H:i:s' }}">
-                                00:00:00
-                            </div>
+                        <div class="timer-display h3 text-cyan my-4 countdown-mini"
+                            data-end="{{ event.date|date:'Y-m-d H:i:s' }}">
+                            00:00:00
+                        </div>
                         {% endif %}
                     </div>
 
@@ -228,18 +232,29 @@
             <div class="col-lg-4 col-md-6">
                 <div class="cyber-card p-0 h-100 border-cyan shadow-glow d-flex flex-column overflow-hidden">
                     <div class="project-header bg-dark p-3 text-center border-bottom border-cyan">
-                        <i class="bi bi-heart-pulse text-cyan display-6"></i>
+                        <i class="bi bi-cpu text-cyan display-6"></i>
                     </div>
-                    <div class="p-4 flex-grow-1">
-                        <h4 class="text-white">BAIUST-Robotics-Society-BARS</h4>
-                        <p class="small text-muted help-text">Community Health Navigator platform developed in November 2025 to streamline healthcare access.</p>
-                        <div class="d-flex gap-2 mt-3 mb-4">
+                    <div class="p-4 flex-grow-1 d-flex flex-column">
+                        <h4 class="text-white mb-3">BAIUST-Robotics-Society-BARS</h4>
+                        <p class="small text-muted help-text mb-3">The central command portal and management system exclusively built for the university's robotics network.</p>
+                        
+                        <ul class="list-unstyled flex-grow-1 small text-cyan opacity-75 mb-4">
+                            <li class="mb-2"><i class="bi bi-gear-wide-connected me-2"></i>Executive Panel Coordination</li>
+                            <li class="mb-2"><i class="bi bi-calendar-event me-2"></i>Live Operations & Event Routing</li>
+                            <li class="mb-2"><i class="bi bi-person-vcard me-2"></i>Dynamic Member Profiles</li>
+                            <li class="mb-2"><i class="bi bi-printer me-2"></i>Automated Print Generation</li>
+                        </ul>
+
+                        <div class="d-flex flex-wrap gap-2 mt-auto">
                             <span class="badge bg-dark border border-cyan text-cyan">Django</span>
-                            <span class="badge bg-dark border border-cyan text-cyan">HealthTech</span>
+                            <span class="badge bg-dark border border-cyan text-cyan">Python</span>
+                            <span class="badge bg-dark border border-cyan text-cyan">Web Portal</span>
+                            <span class="badge bg-dark border border-cyan text-cyan">Automation</span>
                         </div>
                     </div>
                     <div class="p-4 pt-0">
-                        <a href="https://github.com/RR0327/BAIUST-Robotics-Society-BARS.git" target="_blank" class="btn btn-outline-cyan w-100 btn-sm">
+                        <a href="https://github.com/RR0327/BAIUST-Robotics-Society-BARS.git" target="_blank"
+                            class="btn btn-outline-cyan w-100 btn-sm">
                             <i class="bi bi-github me-2"></i>VIEW SOURCE CODE
                         </a>
                     </div>
@@ -253,14 +268,16 @@
                     </div>
                     <div class="p-4 flex-grow-1">
                         <h4 class="text-white">Campus Event Management System</h4>
-                        <p class="small text-muted help-text">Full-stack system featuring QR-based ticketing for university campus operations, developed in 2025.</p>
+                        <p class="small text-muted help-text">Full-stack system featuring QR-based ticketing for
+                            university campus operations, developed in 2025.</p>
                         <div class="d-flex gap-2 mt-3 mb-4">
                             <span class="badge bg-dark border border-orange text-orange">Django</span>
                             <span class="badge bg-dark border border-orange text-orange">Automation</span>
                         </div>
                     </div>
                     <div class="p-4 pt-0">
-                        <a href="https://github.com/RR0327/Campus-Events-Hub.git" target="_blank" class="btn btn-outline-orange w-100 btn-sm">
+                        <a href="https://github.com/RR0327/Campus-Events-Hub.git" target="_blank"
+                            class="btn btn-outline-orange w-100 btn-sm">
                             <i class="bi bi-github me-2"></i>VIEW SOURCE CODE
                         </a>
                     </div>
@@ -274,14 +291,16 @@
                     </div>
                     <div class="p-4 flex-grow-1">
                         <h4 class="text-white">IOT WASTE PROTOTYPE</h4>
-                        <p class="small text-muted help-text">Award-winning IoT solution for sustainable waste management, a DevFest Hackathon finalist project.</p>
+                        <p class="small text-muted help-text">Award-winning IoT solution for sustainable waste
+                            management, a DevFest Hackathon finalist project.</p>
                         <div class="d-flex gap-2 mt-3 mb-4">
                             <span class="badge bg-dark border border-cyan text-cyan">Arduino</span>
                             <span class="badge bg-dark border border-cyan text-cyan">IoT</span>
                         </div>
                     </div>
                     <div class="p-4 pt-0">
-                        <a href="https://github.com/RakibulHassan/IoT-Waste-Mgmt" target="_blank" class="btn btn-outline-cyan w-100 btn-sm">
+                        <a href="https://github.com/RakibulHassan/IoT-Waste-Mgmt" target="_blank"
+                            class="btn btn-outline-cyan w-100 btn-sm">
                             <i class="bi bi-github me-2"></i>VIEW SOURCE CODE
                         </a>
                     </div>
@@ -296,7 +315,8 @@
     <div class="container">
         <div class="text-center mb-5">
             <h2 class="glow-text">HARDWARE ENGINEERING ROADMAP</h2>
-            <p class="text-cyan uppercase tracking-widest small">From Electronics Fundamentals to Robotics Hardware Systems</p>
+            <p class="text-cyan uppercase tracking-widest small">From Electronics Fundamentals to Robotics Hardware
+                Systems</p>
             <div class="header-line mx-auto"></div>
         </div>
 
@@ -305,7 +325,8 @@
                 <div class="cyber-card p-4 h-100 border-secondary text-center">
                     <div class="text-orange mb-3 h2">01</div>
                     <h5 class="text-white">EMBEDDED FOUNDATION</h5>
-                    <p class="small help-text">Learning basic electronics, circuit safety, microcontroller fundamentals, and hands-on breadboard skills.</p>
+                    <p class="small help-text">Learning basic electronics, circuit safety, microcontroller fundamentals,
+                        and hands-on breadboard skills.</p>
                     <ul class="list-unstyled extra-small text-cyan opacity-75">
                         <li><i class="bi bi-check2-all me-1"></i>Electronics Basics</li>
                         <li><i class="bi bi-check2-all me-1"></i>Microcontroller Hardware</li>
@@ -317,7 +338,8 @@
                 <div class="cyber-card p-4 h-100 border-cyan text-center">
                     <div class="text-cyan mb-3 h2">02</div>
                     <h5 class="text-white">EMBEDDED SYSTEMS</h5>
-                    <p class="small help-text">Building sensor-based boards, power circuits, and reliable embedded prototypes with ESP/STM platforms.</p>
+                    <p class="small help-text">Building sensor-based boards, power circuits, and reliable embedded
+                        prototypes with ESP/STM platforms.</p>
                     <ul class="list-unstyled extra-small text-cyan opacity-75">
                         <li><i class="bi bi-check2-all me-1"></i>Sensor Integration</li>
                         <li><i class="bi bi-check2-all me-1"></i>Power & PCB Basics</li>
@@ -329,7 +351,8 @@
                 <div class="cyber-card p-4 h-100 border-orange text-center">
                     <div class="text-orange mb-3 h2">03</div>
                     <h5 class="text-white">CONTROL & AUTOMATION</h5>
-                    <p class="small help-text">Designing automation circuits and actuator control systems for lab and industrial robotics applications.</p>
+                    <p class="small help-text">Designing automation circuits and actuator control systems for lab and
+                        industrial robotics applications.</p>
                     <ul class="list-unstyled extra-small text-cyan opacity-75">
                         <li><i class="bi bi-check2-all me-1"></i>Control Systems</li>
                         <li><i class="bi bi-check2-all me-1"></i>Motors, Drivers & PLC</li>
@@ -341,7 +364,8 @@
                 <div class="cyber-card p-4 h-100 border-cyan text-center">
                     <div class="text-cyan mb-3 h2">04</div>
                     <h5 class="text-white">ROBOTICS HARDWARE BUILD</h5>
-                    <p class="small help-text">Integrating electronics, mechanics, and control hardware into complete robotics systems.</p>
+                    <p class="small help-text">Integrating electronics, mechanics, and control hardware into complete
+                        robotics systems.</p>
                     <ul class="list-unstyled extra-small text-cyan opacity-75">
                         <li><i class="bi bi-check2-all me-1"></i>Prototype Assembly</li>
                         <li><i class="bi bi-check2-all me-1"></i>Testing & Calibration</li>
@@ -353,89 +377,100 @@
 </section>
 
 {% for panel in panels %}
-    {% for member in panel.members.all %}
-    <div class="modal fade" id="memberModal{{ member.id }}" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content bg-dark-card border-cyan">
-                <div class="modal-header border-cyan">
-                    <h5 class="modal-title text-white">{{ member.name }}</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <!-- Left Column - Photo & Basic Info -->
-                        <div class="col-md-4 text-center mb-3 mb-md-0">
-                            {% if member.photo %}
-                            <img src="{{ member.photo.url }}" alt="{{ member.name }}" 
-                                 class="img-fluid rounded-circle border-cyan mb-3"
-                                 style="width: 150px; height: 150px; object-fit: cover;">
-                            {% else %}
-                            <div class="rounded-circle border-cyan d-flex align-items-center justify-content-center mx-auto mb-3"
-                                 style="width: 150px; height: 150px; background: rgba(0, 243, 255, 0.1);">
-                                <i class="bi bi-person-fill fs-1 text-cyan"></i>
-                            </div>
-                            {% endif %}
-                            
-                            <h5 class="fw-bold">{{ member.name }}</h5>
-                            <span class="badge {% if member.role == 'President' %}bg-orange{% else %}bg-cyan{% endif %} mb-2">
-                                {{ member.role }}
-                            </span>
-                            {% if member.email %}
-                            <p class="small text-white">{{ member.email }}</p>
-                            {% endif %}
-                            <p class="small text-white">{{ panel.name }} ({{ panel.year }})</p>
+{% for member in panel.members.all %}
+<div class="modal fade" id="memberModal{{ member.id }}" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content bg-dark-card border-cyan">
+            <div class="modal-header border-cyan">
+                <h5 class="modal-title text-white">{{ member.name }}</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <!-- Left Column - Photo & Basic Info -->
+                    <div class="col-md-4 text-center mb-3 mb-md-0">
+                        {% if member.photo %}
+                        <img src="{{ member.photo.url }}" alt="{{ member.name }}"
+                            class="img-fluid rounded-circle border-cyan mb-3"
+                            style="width: 150px; height: 150px; object-fit: cover;">
+                        {% else %}
+                        <div class="rounded-circle border-cyan d-flex align-items-center justify-content-center mx-auto mb-3"
+                            style="width: 150px; height: 150px; background: rgba(0, 243, 255, 0.1);">
+                            <i class="bi bi-person-fill fs-1 text-cyan"></i>
                         </div>
-                        
-                        <!-- Right Column - Bio & Contact -->
-                        <div class="col-md-8">
-                            <h6 class="text-cyan mb-3">
-                                <i class="bi bi-info-circle me-2"></i>Biography
-                            </h6>
-                            <p class="mb-4">{{ member.bio|linebreaks }}</p>
-                            
-                            {% if member.fathers_name %}
-                            <h6 class="text-cyan mb-3">
-                                <i class="bi bi-person me-2"></i>Father's Name
-                            </h6>
-                            <p class="mb-4">{{ member.fathers_name }}</p>
+                        {% endif %}
+
+                        <h5 class="fw-bold">{{ member.name }}</h5>
+                        <span
+                            class="badge {% if member.role == 'President' %}bg-orange{% else %}bg-cyan{% endif %} mb-2">
+                            {{ member.role }}
+                        </span>
+                        {% if member.email %}
+                        <p class="small text-white">{{ member.email }}</p>
+                        {% endif %}
+                        <p class="small text-white">{{ panel.name }} ({{ panel.year }})</p>
+                    </div>
+
+                    <!-- Right Column - Bio & Contact -->
+                    <div class="col-md-8">
+                        <h6 class="text-cyan mb-3">
+                            <i class="bi bi-info-circle me-2"></i>Biography
+                        </h6>
+                        <p class="mb-4">{{ member.bio|linebreaks }}</p>
+
+                        {% if member.fathers_name %}
+                        <h6 class="text-cyan mb-3">
+                            <i class="bi bi-person me-2"></i>Father's Name
+                        </h6>
+                        <p class="mb-4">{{ member.fathers_name }}</p>
+                        {% endif %}
+
+                        <h6 class="text-cyan mb-3">
+                            <i class="bi bi-envelope me-2"></i>Contact Information
+                        </h6>
+                        <div class="d-flex flex-wrap gap-2">
+                            {% if member.email %}
+                            <a href="mailto:{{ member.email }}" class="btn btn-sm btn-outline-cyber">
+                                <i class="bi bi-envelope me-1"></i>Email
+                            </a>
                             {% endif %}
-                            
-                            <h6 class="text-cyan mb-3">
-                                <i class="bi bi-envelope me-2"></i>Contact Information
-                            </h6>
-                            <div class="d-flex flex-wrap gap-2">
-                                {% if member.email %}
-                                <a href="mailto:{{ member.email }}" class="btn btn-sm btn-outline-cyber">
-                                    <i class="bi bi-envelope me-1"></i>Email
-                                </a>
-                                {% endif %}
-                                {% if member.linkedin %}
-                                <a href="{{ member.linkedin }}" target="_blank" class="btn btn-sm btn-outline-cyber">
-                                    <i class="bi bi-linkedin me-1"></i>LinkedIn
-                                </a>
-                                {% endif %}
-                                {% if member.github %}
-                                <a href="{{ member.github }}" target="_blank" class="btn btn-sm btn-outline-cyber">
-                                    <i class="bi bi-github me-1"></i>GitHub
-                                </a>
-                                {% endif %}
-                            </div>
+                            {% if member.linkedin %}
+                            <a href="{{ member.linkedin }}" target="_blank" class="btn btn-sm btn-outline-cyber">
+                                <i class="bi bi-linkedin me-1"></i>LinkedIn
+                            </a>
+                            {% endif %}
+                            {% if member.github %}
+                            <a href="{{ member.github }}" target="_blank" class="btn btn-sm btn-outline-cyber">
+                                <i class="bi bi-github me-1"></i>GitHub
+                            </a>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer border-cyan">
-                    <button type="button" class="btn btn-outline-cyber" data-bs-dismiss="modal">Close</button>
-                </div>
+            </div>
+            <div class="modal-footer border-cyan">
+                <button type="button" class="btn btn-outline-cyber" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
-    {% endfor %}
+</div>
+{% endfor %}
 {% endfor %}
 
 <style>
-    .president-card { border: 2px solid var(--primary-orange) !important; box-shadow: 0 0 15px rgba(255, 107, 0, 0.3); }
-    .president-card .member-photo { border-color: var(--primary-orange) !important; }
-    .bg-orange { background-color: var(--primary-orange) !important; color: #000 !important; }
+    .president-card {
+        border: 2px solid var(--primary-orange) !important;
+        box-shadow: 0 0 15px rgba(255, 107, 0, 0.3);
+    }
+
+    .president-card .member-photo {
+        border-color: var(--primary-orange) !important;
+    }
+
+    .bg-orange {
+        background-color: var(--primary-orange) !important;
+        color: #000 !important;
+    }
 </style>
 
 {% endblock %}
