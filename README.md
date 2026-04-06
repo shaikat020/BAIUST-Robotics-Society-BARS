@@ -1,6 +1,6 @@
 # BAIUST Robotics Society (BARS) - Django Project
 
-This README is prepared for IT Wing deployment and local setup.
+
 
 ## 1. Project Overview
 
@@ -39,6 +39,7 @@ python -m venv venv
 .\venv\Scripts\Activate.ps1
 python -m pip install --upgrade pip
 pip install -r requirements.txt
+python manage.py makemigrations
 python manage.py migrate
 python manage.py collectstatic --noinput
 python manage.py createsuperuser
@@ -56,13 +57,14 @@ python3 -m venv venv
 source venv/bin/activate
 python -m pip install --upgrade pip
 pip install -r requirements.txt
+python manage.py makemigrations
 python manage.py migrate
 python manage.py collectstatic --noinput
 python manage.py createsuperuser
 python manage.py runserver 0.0.0.0:8000
 ```
 
-Open: `http://127.0.0.1:8000/` (or server IP if remote)
+Open: `http://127.0.0.1:8000/`
 
 ## 5. Development Mode
 
@@ -72,11 +74,9 @@ Use Django development server:
 python manage.py runserver
 ```
 
-Notes:
-- Hot reload is enabled.
-- Suitable for local development/testing only.
 
-## 6. Production Mode (Recommended Guidance)
+
+## 6. Production Mode
 
 Important: Current `BARS/settings.py` has `DEBUG = True`, hardcoded `SECRET_KEY`, and SQLite. These are not recommended for production.
 
@@ -89,10 +89,10 @@ Minimum requirements:
 - Set secure `SECRET_KEY` from environment variable
 - Set `ALLOWED_HOSTS` to real domain/IP
 - Keep email/app secrets out of source code
-- Use a production database (PostgreSQL/MySQL) instead of SQLite for multi-user reliability
+- Use a production database (PostgreSQL) instead of SQLite for multi-user reliability
 - Serve static files via Nginx/Apache/CDN
 
-### 6.2 Production Server on Linux (Typical)
+### 6.2 Production Server on Linux
 
 Install additional production packages:
 
@@ -130,7 +130,7 @@ python manage.py collectstatic --noinput
 python manage.py check --deploy
 ```
 
-## 8. Deployment Checklist for IT Wing
+## 8. Deployment Checklist
 
 - Python and virtual environment created
 - Dependencies installed from `requirements.txt`
@@ -142,26 +142,3 @@ python manage.py check --deploy
 - Secret keys and email credentials moved to environment variables
 - Production app server configured (Gunicorn on Linux / Waitress on Windows)
 - Reverse proxy configured (Nginx/Apache)
-
-## 9. Quick Start Summary
-
-### Windows (development)
-
-```powershell
-.\venv\Scripts\Activate.ps1
-pip install -r requirements.txt
-python manage.py migrate
-python manage.py runserver
-```
-
-### Linux (development)
-
-```bash
-source venv/bin/activate
-pip install -r requirements.txt
-python manage.py migrate
-python manage.py runserver 0.0.0.0:8000
-```
-
----
-Prepared for BARS IT Wing. If needed, I can also provide a ready-to-use `settings_prod.py`, `.env.example`, and a sample Nginx + systemd configuration.
