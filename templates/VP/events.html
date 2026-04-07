@@ -73,12 +73,13 @@
                     <p class="text-muted">
                         <i class="bi bi-calendar me-1"></i>
                         {{ next_event.date|date:"F d, Y - h:i A" }}
+                        {% if next_event.end_date %}<br><i class="bi bi-calendar me-1"></i>{{ next_event.end_date|date:"F d, Y - h:i A" }}{% endif %}
                         <i class="bi bi-geo-alt ms-3 me-1"></i>
                         {{ next_event.location }}
                     </p>
                 </div>
                 
-                <div class="timer-display countdown" data-end="{{ next_event.date|date:'Y-m-d H:i:s' }}">
+                <div class="timer-display countdown" data-end="{% if next_event.end_date %}{{ next_event.end_date|date:'Y-m-d H:i:s' }}{% else %}{{ next_event.date|date:'Y-m-d H:i:s' }}{% endif %}">
                     Loading...
                 </div>
                 
@@ -136,6 +137,7 @@
                 <p class="text-cyan small mb-2 fw-bold">
                     <i class="bi bi-calendar me-1"></i>{{ event.date|date:"M d, Y" }} • 
                     <i class="bi bi-clock me-1"></i>{{ event.date|date:"h:i A" }}
+                    {% if event.end_date %} - <br><i class="bi bi-calendar me-1"></i>{{ event.end_date|date:"M d, Y" }} • <i class="bi bi-clock me-1"></i>{{ event.end_date|date:"h:i A" }}{% endif %}
                 </p>
                 
                 <!-- Location -->

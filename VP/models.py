@@ -136,6 +136,7 @@ class Event(models.Model):
     title = models.CharField(max_length=200)
     description = models.TextField()
     date = models.DateTimeField()
+    end_date = models.DateTimeField(null=True, blank=True)
     location = models.CharField(max_length=200)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES)
     image = models.ImageField(upload_to="events/", blank=True, null=True)

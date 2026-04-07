@@ -73,7 +73,7 @@ class EventResultInline(admin.TabularInline):
 
 
 class EventAdmin(admin.ModelAdmin):
-    list_display = ["title", "date", "status", "location"]
+    list_display = ["title", "date", "end_date", "status", "location"]
     list_filter = ["status", "date", "created_at"]
     search_fields = ["title", "description", "location"]
     ordering = ["-date"]
@@ -84,7 +84,7 @@ class EventAdmin(admin.ModelAdmin):
             "fields": ("title", "description", "image")
         }),
         ("Details", {
-            "fields": ("date", "location", "status")
+            "fields": ("date", "end_date", "location", "status")
         }),
         ("Registration", {
             "fields": ("registration_link",)

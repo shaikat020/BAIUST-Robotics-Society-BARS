@@ -106,7 +106,8 @@
 
                                 <div class="d-flex flex-wrap gap-4 text-cyan mb-4">
                                     <span><i class="bi bi-calendar me-2"></i>{{ event.date|date:"F d, Y" }}</span>
-                                    <span><i class="bi bi-clock me-2"></i>{{ event.date|date:"h:i A" }}</span>
+                                    <span><i class="bi bi-clock me-2"></i>{{ event.date|date:"h:i A" }}{% if event.end_date %} - {{ event.end_date|date:"h:i A" }}{% endif %}</span>
+                                    {% if event.end_date %}<span><i class="bi bi-calendar me-2"></i> {{ event.end_date|date:"F d, Y" }}</span>{% endif %}
                                     <span><i class="bi bi-geo-alt me-2"></i>{{ event.location }}</span>
                                 </div>
                             </div>
@@ -115,7 +116,7 @@
                                 <div class="d-flex gap-2 mb-4">
                                     <button class="btn btn-outline-cyber flex-fill" onclick="copyEventLink()"><i
                                             class="bi bi-share me-2"></i>Share</button>
-                                    <a href="https://www.google.com/calendar/render?action=TEMPLATE&text={{ event.title }}&dates={{ event.date|date:'Ymd\THis' }}&location={{ event.location }}"
+                                    <a href="https://www.google.com/calendar/render?action=TEMPLATE&text={{ event.title }}&dates={{ event.date|date:'Ymd\THis' }}/{% if event.end_date %}{{ event.end_date|date:'Ymd\THis' }}{% else %}{{ event.date|date:'Ymd\THis' }}{% endif %}&location={{ event.location }}"
                                         target="_blank" class="btn btn-outline-cyber flex-fill"><i
                                             class="bi bi-calendar-plus"></i></a>
                                     <button class="btn btn-outline-cyber flex-fill" onclick="window.print()"><i
@@ -132,7 +133,7 @@
                                         <i class="bi bi-hourglass-split text-cyan me-2"></i>
                                         TIME TO OPERATION
                                     </h4>
-                                    <div class="timer-display countdown" data-end="{{ event.date|date:'Y-m-d H:i:s' }}">
+                                    <div class="timer-display countdown" data-end="{% if event.end_date %}{{ event.end_date|date:'Y-m-d H:i:s' }}{% else %}{{ event.date|date:'Y-m-d H:i:s' }}{% endif %}">
                                         Loading...
                                     </div>
                                 </div>
