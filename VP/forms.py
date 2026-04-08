@@ -460,12 +460,9 @@ class UserProfileForm(forms.ModelForm):
 
     class Meta:
         model = UserProfile
-        fields = ["user_type", "panel", "student_id", "phone"]
+        fields = ["user_type", "student_id", "phone"]
         widgets = {
             "user_type": forms.Select(
-                attrs={"class": "form-select bg-dark text-light border-cyan"}
-            ),
-            "panel": forms.Select(
                 attrs={"class": "form-select bg-dark text-light border-cyan"}
             ),
             "student_id": forms.TextInput(

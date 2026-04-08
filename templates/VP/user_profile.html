@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="cyber-card p-4 p-md-5">
+                <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+                    <div>
+                        <h2 class="glow-text mb-1">EDIT PROFILE</h2>
+                        <p class="text-cyan mb-0">Update your account and BARS membership information.</p>
+                    </div>
+                    <a href="{% url 'user_dashboard' %}" class="btn btn-outline-cyber">
+                        <i class="bi bi-arrow-left me-2"></i>Back to Dashboard
+                    </a>
+                </div>
+
+                <form method="post" class="cyber-form">
+                    {% csrf_token %}
+
+                    <div class="row g-4">
+                        <div class="col-lg-6">
+                            <h5 class="text-cyan mb-3"><i class="bi bi-person-circle me-2"></i>Account Details</h5>
+                            {% for field in form %}
+                                <div class="mb-3">
+                                    <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                                    {{ field }}
+                                    {% if field.help_text %}
+                                        <small class="form-text">{{ field.help_text }}</small>
+                                    {% endif %}
+                                    {% for error in field.errors %}
+                                        <div class="text-danger small mt-1">{{ error }}</div>
+                                    {% endfor %}
+                                </div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="col-lg-6">
+                            <h5 class="text-orange mb-3"><i class="bi bi-shield-check me-2"></i>BARS Profile</h5>
+                            {% for field in profile_form %}
+                                <div class="mb-3">
+                                    <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                                    {{ field }}
+                                    {% if field.help_text %}
+                                        <small class="form-text">{{ field.help_text }}</small>
+                                    {% endif %}
+                                    {% for error in field.errors %}
+                                        <div class="text-danger small mt-1">{{ error }}</div>
+                                    {% endfor %}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    {% if form.non_field_errors or profile_form.non_field_errors %}
+                    <div class="alert alert-danger mt-3 mb-0">
+                        {{ form.non_field_errors }}
+                        {{ profile_form.non_field_errors }}
+                    </div>
+                    {% endif %}
+
+                    <div class="d-flex flex-wrap gap-2 mt-4">
+                        <button type="submit" class="btn btn-cyber">
+                            <i class="bi bi-save me-2"></i>Save Changes
+                        </button>
+                        <a href="{% url 'user_dashboard' %}" class="btn btn-outline-cyber">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

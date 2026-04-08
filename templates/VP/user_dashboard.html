@@ -1,0 +1,159 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row mb-4">
+        <div class="col-12">
+            <h1 class="glow-text">USER COMMAND PANEL</h1>
+            <p class="text-cyan mb-0">
+                OPERATOR: {{ user.get_full_name|default:user.username|upper }} |
+                ACCESS LEVEL: {{ profile.get_user_type_display|upper }}
+                {% if member_record and member_record.panel %}
+                | PANEL: {{ member_record.panel.year }}
+                {% endif %}
+            </p>
+        </div>
+    </div>
+
+    <div class="row g-4 mb-5">
+        <div class="col-md-4">
+            <div class="cyber-card p-4 h-100 text-center">
+                <div class="display-5 text-cyan fw-bold">{{ total_events }}</div>
+                <p class="help-text mb-0">TOTAL EVENTS TRACKED</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="cyber-card p-4 h-100 text-center">
+                <div class="display-5 text-orange fw-bold">{{ total_members }}</div>
+                <p class="help-text mb-0">
+                    ACTIVE MEMBERS
+                    {% if active_panel %}
+                    ({{ active_panel.year }})
+                    {% else %}
+                    (CURRENT PANEL)
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="cyber-card p-4 h-100 text-center">
+                <div class="display-5 text-cyan fw-bold">{{ panel_count }}</div>
+                <p class="help-text mb-0">PANEL ARCHIVES</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4 mb-5">
+        <div class="col-lg-5">
+            <div class="cyber-card p-4 h-100 border-cyan">
+                <h4 class="text-cyan mb-3"><i class="bi bi-person-badge me-2"></i>PROFILE SNAPSHOT</h4>
+                <div class="small text-light">
+                    <p class="mb-2"><span class="text-cyan">Username:</span> {{ user.username }}</p>
+                    <p class="mb-2"><span class="text-cyan">Name:</span> {{ user.get_full_name|default:'Not set' }}</p>
+                    <p class="mb-2"><span class="text-cyan">Email:</span> {{ user.email|default:'Not set' }}</p>
+                    <p class="mb-2"><span class="text-cyan">Student ID:</span> {{ profile.student_id|default:'Not set' }}</p>
+                    <p class="mb-0"><span class="text-cyan">Phone:</span> {{ profile.phone|default:'Not set' }}</p>
+                </div>
+                <div class="mt-3">
+                    <a href="{% url 'user_profile' %}" class="btn btn-sm btn-cyber">
+                        <i class="bi bi-pencil-square me-1"></i>Edit Profile
+                    </a>
+                </div>
+
+                {% if member_record %}
+                <hr class="border-cyan my-3">
+                <div class="small">
+                    <p class="mb-2"><span class="text-orange">Club Role:</span> {{ member_record.role }}</p>
+                    <p class="mb-2"><span class="text-orange">Department:</span> {{ member_record.get_department_display }}</p>
+                    {% if member_record.panel %}
+                    <p class="mb-0"><span class="text-orange">Panel:</span> {{ member_record.panel.name }} ({{ member_record.panel.year }})</p>
+                    {% endif %}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="col-lg-7">
+            <div class="cyber-card p-4 h-100">
+                <h4 class="text-orange mb-3"><i class="bi bi-lightning-charge me-2"></i>QUICK ACTIONS</h4>
+                <div class="row g-3">
+                    <div class="col-sm-6">
+                        <a href="{% url 'user_profile' %}" class="btn btn-outline-cyber w-100 text-start">
+                            <i class="bi bi-person-gear me-2"></i>Edit Profile
+                        </a>
+                    </div>
+                    <div class="col-sm-6">
+                        <a href="{% url 'events' %}" class="btn btn-outline-cyber w-100 text-start">
+                            <i class="bi bi-calendar-event me-2"></i>Browse Events
+                        </a>
+                    </div>
+                    <div class="col-sm-6">
+                        <a href="{% url 'members' %}" class="btn btn-outline-cyber w-100 text-start">
+                            <i class="bi bi-people me-2"></i>Members Directory
+                        </a>
+                    </div>
+                    <div class="col-sm-6">
+                        <a href="{% url 'achievements' %}" class="btn btn-outline-cyber w-100 text-start">
+                            <i class="bi bi-trophy me-2"></i>Achievements
+                        </a>
+                    </div>
+                    <div class="col-sm-6">
+                        <a href="{% url 'about' %}" class="btn btn-outline-cyber w-100 text-start">
+                            <i class="bi bi-info-circle me-2"></i>About BARS
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-lg-7">
+            <div class="cyber-card p-4 h-100 border-cyan">
+                <h4 class="text-cyan mb-3"><i class="bi bi-calendar2-week me-2"></i>UPCOMING OPERATIONS</h4>
+                {% if upcoming_events %}
+                    <div class="d-grid gap-3">
+                        {% for event in upcoming_events %}
+                        <div class="p-3 rounded bg-dark border border-secondary">
+                            <div class="d-flex justify-content-between align-items-start gap-3 flex-wrap">
+                                <div>
+                                    <h6 class="text-white mb-1">{{ event.title }}</h6>
+                                    <p class="mb-1 small text-cyan">
+                                        <i class="bi bi-calendar me-1"></i>{{ event.date|date:"M d, Y - h:i A" }}
+                                    </p>
+                                    <p class="mb-0 small text-light">
+                                        <i class="bi bi-geo-alt me-1 text-cyan"></i>{{ event.location }}
+                                    </p>
+                                </div>
+                                <a href="{% url 'event_detail' event.id %}" class="btn btn-sm btn-outline-cyber">Details</a>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p class="text-muted mb-0">No upcoming or ongoing events right now.</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="col-lg-5">
+            <div class="cyber-card p-4 h-100">
+                <h4 class="text-orange mb-3"><i class="bi bi-award me-2"></i>LATEST HIGHLIGHTS</h4>
+                {% if latest_achievements %}
+                    <div class="d-grid gap-3">
+                        {% for item in latest_achievements %}
+                        <div class="p-3 rounded bg-dark border border-secondary">
+                            <h6 class="text-white mb-1">{{ item.title }}</h6>
+                            <p class="small text-cyan mb-1">{{ item.get_category_display }}</p>
+                            <p class="small text-muted mb-0">{{ item.description|truncatewords:16 }}</p>
+                        </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p class="text-muted mb-0">No achievements available yet.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

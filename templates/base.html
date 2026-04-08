@@ -84,9 +84,13 @@
                     </li>
                     
                     {% if user.is_authenticated %}
-                        {% if user.userprofile.user_type == 'admin' %}
+                        {% if user.is_superuser or user.is_staff or user.userprofile.user_type == 'admin' %}
                         <li class="nav-item">
                             <a class="nav-link {% if 'admin-dashboard' in request.path %}active glow{% endif %}" href="{% url 'admin_dashboard' %}">DASHBOARD</a>
+                        </li>
+                        {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link {% if 'dashboard' in request.path %}active glow{% endif %}" href="{% url 'user_dashboard' %}">DASHBOARD</a>
                         </li>
                         {% endif %}
                         <li class="nav-item">

@@ -26,15 +26,7 @@
         </div>
         <div class="col-md-3 col-6 mb-3">
             <div class="cyber-card text-center p-3">
-                <h2 class="text-cyan mb-2">
-                    {% for member in members %}
-                        {% if member.role == 'President' %}
-                            {% with president_count=1 %}
-                                {{ president_count }}
-                            {% endwith %}
-                        {% endif %}
-                    {% endfor %}
-                </h2>
+                <h2 class="text-cyan mb-2">{{ president_count }}</h2>
                 <p class="mb-0">Presidents</p>
             </div>
         </div>

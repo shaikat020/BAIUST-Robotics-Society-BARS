@@ -198,11 +198,14 @@ def members_view(request):
     if selected_role != "all":
         members = members.filter(role=selected_role)
 
+    president_count = members.filter(role="President").count()
+
     context = {
         "members": members,
         "panels": Panel.objects.all(),
         "selected_panel": selected_panel,
         "selected_role": selected_role,
+        "president_count": president_count,
     }
     return render(request, "VP/members.html", context)
 
@@ -227,7 +230,7 @@ def register_view(request):
             )
             login(request, user)
             messages.success(request, "Registration successful! Welcome to BARS.")
-            return redirect("index")
+            return redirect("admin_dashboard" if is_admin(user) else "user_dashboard")
     else:
         form = RegistrationForm()
     return render(request, "VP/register.html", {"form": form})
@@ -246,7 +249,7 @@ def login_view(request):
             messages.success(request, f"Welcome back, {user.username}!")
             if is_admin(user):
                 return redirect("admin_dashboard")
-            return redirect("index")
+            return redirect("user_dashboard")
     else:
         form = LoginForm()
     return render(request, "VP/login.html", {"form": form})
@@ -257,6 +260,39 @@ def logout_view(request):
     auth_logout(request)
     messages.success(request, "LOGOUT SUCCESSFUL. SESSION TERMINATED.")
     return redirect("index")
+
+
+@login_required
+def user_dashboard(request):
+    """Mission dashboard for authenticated non-admin users."""
+    try:
+        profile = request.user.userprofile
+    except UserProfile.DoesNotExist:
+        profile = UserProfile.objects.create(user=request.user, user_type="guest")
+
+    member_record = (
+        Member.objects.filter(user=request.user).select_related("panel").first()
+    )
+    active_panel = Panel.objects.all().first()
+    active_member_count = (
+        Member.objects.filter(panel=active_panel).count() if active_panel else 0
+    )
+    upcoming_events = Event.objects.filter(status__in=["Upcoming", "Ongoing"]).order_by(
+        "date"
+    )[:4]
+    latest_achievements = Achievement.objects.all()[:3]
+
+    context = {
+        "profile": profile,
+        "member_record": member_record,
+        "active_panel": active_panel,
+        "upcoming_events": upcoming_events,
+        "latest_achievements": latest_achievements,
+        "total_events": Event.objects.count(),
+        "total_members": active_member_count,
+        "panel_count": Panel.objects.count(),
+    }
+    return render(request, "VP/user_dashboard.html", context)
 
 
 @login_required
