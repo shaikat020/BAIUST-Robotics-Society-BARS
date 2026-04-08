@@ -11,7 +11,7 @@ from django.core.mail import send_mail
 from django.conf import settings
 from django.views.decorators.csrf import csrf_protect
 
-from .models import Panel, Member, Advisor, Event, Achievement, UserProfile
+from .models import Panel, Member, Advisor, Event, EventResult, Achievement, UserProfile
 from .forms import RegistrationForm, UserUpdateForm, UserProfileForm, LoginForm
 
 # --- Helper Functions ---
@@ -153,21 +153,25 @@ def event_photos(request, event_id):
 def event_results(request, event_id):
     """Winner standings for a specific mission/event."""
     event = get_object_or_404(Event, id=event_id)
-    results = event.results.all()
+    results = event.results.all().order_by("order", "id")
 
-    # Separate champion and runner-up from other results
-    champion = results.filter(rank="Champion").first()
-    runner_up_1 = results.filter(rank="1st Runner-up").first()
-    other_results = results.exclude(rank__in=["Champion", "1st Runner-up"])
+    ranked_results = []
+    for rank_value, rank_label in EventResult.RANK_CHOICES:
+        rank_items = [result for result in results if result.rank == rank_value]
+        if rank_items:
+            ranked_results.append(
+                {
+                    "rank": rank_label,
+                    "results": rank_items,
+                }
+            )
 
     return render(
         request,
         "VP/event_results.html",
         {
             "event": event,
-            "champion": champion,
-            "runner_up_1": runner_up_1,
-            "other_results": other_results,
+            "ranked_results": ranked_results,
         },
     )
 

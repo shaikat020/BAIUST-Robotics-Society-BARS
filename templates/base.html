@@ -70,14 +70,15 @@
                         <a class="nav-link {% if 'about' in request.path %}active glow{% endif %}" href="{% url 'about' %}">ABOUT</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link {% if 'advisors' in request.path %}active glow{% endif %}" href="{% url 'advisors' %}">ADVISORS</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link {% if 'panels' in request.path %}active glow{% endif %}" href="{% url 'panels' %}">PANELS</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {% if 'events' in request.path %}active glow{% endif %}" href="{% url 'events' %}">EVENTS</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link {% if 'advisors' in request.path %}active glow{% endif %}" href="{% url 'advisors' %}">ADVISORS</a>
-                    </li>
+                    
                     <li class="nav-item">
                         <a class="nav-link {% if 'achievements' in request.path %}active glow{% endif %}" href="{% url 'achievements' %}">ACHIEVEMENTS</a>
                     </li>
@@ -158,7 +159,7 @@
                         </a>
                     </p>
                     <p class="mb-0">
-                        <a href="mailto:bars8thpanel@gmail.com?subject=Inquiry%20to%20BARS%20Mainframe&body=Commander," class="text-decoration-none text-light hover-cyan">
+                        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=bars8thpanel@gmail.com&su=Inquiry%20to%20BARS%20Mainframe&body=Commander%2C" target="_blank" rel="noopener noreferrer" class="text-decoration-none text-light hover-cyan">
                             <i class="bi bi-envelope text-cyan me-2"></i> 
                             bars8thpanel@gmail.com
                         </a>

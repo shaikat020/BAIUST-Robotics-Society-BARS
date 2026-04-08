@@ -96,7 +96,7 @@
                             data-bs-target="#advisorModal{{ advisor.id }}">
                         <i class="bi bi-eye me-1"></i>View Profile
                     </button>
-                    <a href="mailto:{{ advisor.email }}" class="btn btn-sm btn-outline-cyber flex-fill">
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to={{ advisor.email|urlencode }}" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline-cyber flex-fill">
                         <i class="bi bi-envelope me-1"></i>Contact
                     </a>
                 </div>
@@ -200,7 +200,7 @@
                         </p>
                         
                         <div class="mt-4">
-                            <a href="mailto:{{ advisor.email }}" class="btn btn-outline-cyber w-100 mb-2">
+                            <a href="https://mail.google.com/mail/?view=cm&fs=1&to={{ advisor.email|urlencode }}" target="_blank" rel="noopener noreferrer" class="btn btn-outline-cyber w-100 mb-2">
                                 <i class="bi bi-envelope me-1"></i>Email Advisor
                             </a>
                         </div>
@@ -216,7 +216,7 @@
                         {% if advisor.credentials %}
                         <h6 class="text-cyan mb-3">Credentials & Achievements</h6>
                         <div class="credentials">
-                            {{ advisor.credentials|linebreaks }}
+                            {{ advisor.credentials|linebreaks|urlize }}
                         </div>
                         {% endif %}
                         
@@ -262,6 +262,17 @@
     border-radius: 0 5px 5px 0;
 }
 
+.credentials a {
+    color: var(--primary-cyan);
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.credentials a:hover {
+    color: var(--secondary-cyan);
+    text-decoration: underline;
+}
+
 .modal-content.bg-dark-card {
     background: var(--dark-card);
 }
@@ -270,4 +281,34 @@
     border-color: var(--primary-cyan) !important;
 }
 </style>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function addTargetBlankToCredentials() {
+    const credentialsDivs = document.querySelectorAll('.credentials');
+    credentialsDivs.forEach(div => {
+        const links = div.querySelectorAll('a');
+        links.forEach(link => {
+            if (!link.hasAttribute('target')) {
+                link.setAttribute('target', '_blank');
+                link.setAttribute('rel', 'noopener noreferrer');
+            }
+        });
+    });
+}
+
+// Run on initial load
+document.addEventListener('DOMContentLoaded', addTargetBlankToCredentials);
+
+// Also run when modals are shown (for dynamically loaded content)
+document.addEventListener('shown.bs.modal', addTargetBlankToCredentials);
+
+// Use MutationObserver to catch any new credentials divs added to the page
+const observer = new MutationObserver(addTargetBlankToCredentials);
+observer.observe(document.body, { 
+    childList: true, 
+    subtree: true 
+});
+</script>
 {% endblock %}

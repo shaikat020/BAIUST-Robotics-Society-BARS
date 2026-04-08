@@ -189,7 +189,6 @@ class EventResult(models.Model):
 
     class Meta:
         ordering = ["order"]
-        unique_together = [["event", "rank"]]
 
     def __str__(self):
         return f"{self.event.title} - {self.rank}: {self.participant_name}"
